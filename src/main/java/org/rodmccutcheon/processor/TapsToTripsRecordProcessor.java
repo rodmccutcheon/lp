@@ -1,5 +1,9 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.processor;
 
+import org.rodmccutcheon.model.Status;
+import org.rodmccutcheon.model.Tap;
+import org.rodmccutcheon.model.TapType;
+import org.rodmccutcheon.model.Trip;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;

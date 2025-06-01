@@ -1,5 +1,6 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.source;
 
+import org.rodmccutcheon.model.Tap;
 import org.springframework.stereotype.Component;
 
 import java.io.*;

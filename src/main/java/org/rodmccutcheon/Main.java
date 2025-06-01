@@ -1,5 +1,10 @@
 package org.rodmccutcheon;
 
+import org.rodmccutcheon.processor.TapsToTripsRecordProcessor;
+import org.rodmccutcheon.sink.CsvDataSink;
+import org.rodmccutcheon.model.Tap;
+import org.rodmccutcheon.model.Trip;
+import org.rodmccutcheon.source.CsvWindowedDataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;

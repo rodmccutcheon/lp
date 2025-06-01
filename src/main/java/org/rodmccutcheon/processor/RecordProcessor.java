@@ -1,4 +1,4 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.processor;
 
 import java.util.List;
 

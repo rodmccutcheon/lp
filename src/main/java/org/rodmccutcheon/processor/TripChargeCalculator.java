@@ -1,4 +1,4 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.processor;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;

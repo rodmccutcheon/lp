@@ -1,5 +1,6 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.sink;
 
+import org.rodmccutcheon.model.Trip;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;

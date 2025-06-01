@@ -1,5 +1,7 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.source;
 
+import org.rodmccutcheon.model.Tap;
+import org.rodmccutcheon.model.TapType;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;

@@ -1,4 +1,4 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.sink;
 
 import java.util.List;
 

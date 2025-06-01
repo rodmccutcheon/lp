@@ -1,6 +1,11 @@
 package org.rodmccutcheon;
 
 import org.junit.jupiter.api.Test;
+import org.rodmccutcheon.model.Status;
+import org.rodmccutcheon.model.Tap;
+import org.rodmccutcheon.model.TapType;
+import org.rodmccutcheon.model.Trip;
+import org.rodmccutcheon.processor.TapsToTripsRecordProcessor;
 
 import java.time.ZonedDateTime;
 import java.util.Arrays;

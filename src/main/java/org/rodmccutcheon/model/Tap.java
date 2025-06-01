@@ -1,4 +1,4 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.model;
 
 import java.time.ZonedDateTime;
 

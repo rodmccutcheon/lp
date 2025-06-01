@@ -1,4 +1,4 @@
-package org.rodmccutcheon;
+package org.rodmccutcheon.source;
 
 import java.util.List;
 import java.util.stream.Stream;
