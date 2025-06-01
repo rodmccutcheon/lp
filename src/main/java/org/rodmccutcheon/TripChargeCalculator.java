@@ -1,10 +1,12 @@
 package org.rodmccutcheon;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class TripChargeCalculator {
 
     private static final Map<Pair<String, String>, Double> FARE_TABLE;
@@ -25,11 +27,11 @@ public class TripChargeCalculator {
     }
 
     public Double calculateMaximumFare(String fromStop) {
-        switch (fromStop) {
-            case "Stop1": return 7.30;
-            case "Stop2": return 5.50;
-            case "Stop3": return 7.30;
-        }
-        return 0.0;
+        return switch (fromStop) {
+            case "Stop1" -> 7.30;
+            case "Stop2" -> 5.50;
+            case "Stop3" -> 7.30;
+            default -> 0.0;
+        };
     }
 }

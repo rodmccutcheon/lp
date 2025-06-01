@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.springframework:spring-context:6.2.7")
     implementation("org.apache.commons:commons-lang3:3.17.0")
     testImplementation(platform("org.junit:junit-bom:5.11.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")

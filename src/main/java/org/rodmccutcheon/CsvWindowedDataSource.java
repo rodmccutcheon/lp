@@ -1,19 +1,23 @@
 package org.rodmccutcheon;
 
+import org.springframework.stereotype.Component;
+
 import java.io.*;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+@Component
 public class CsvWindowedDataSource implements WindowedDataSource<Tap> {
 
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").withZone(ZoneId.of("UTC"));
+    private final TapParser tapParser;
+
+    public CsvWindowedDataSource(TapParser tapParser) {
+        this.tapParser = tapParser;
+    }
 
     @Override
     public Stream<List<Tap>> stream() {
@@ -26,15 +30,8 @@ public class CsvWindowedDataSource implements WindowedDataSource<Tap> {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                long id = Long.parseLong(parts[0].trim());
-                ZonedDateTime dateTimeUtc = ZonedDateTime.parse(parts[1].trim(), dateTimeFormatter);
-                TapType tapType = TapType.valueOf(parts[2].trim());
-                String stopId = parts[3].trim();
-                String companyId = parts[4].trim();
-                String busId = parts[5].trim();
-                long pan = Long.parseLong(parts[6].trim());
-                Tap tap = new Tap(id, dateTimeUtc, tapType, stopId, companyId, busId, pan);
-                batchedTaps.computeIfAbsent(dateTimeUtc.toLocalDate(), k -> new ArrayList<>()).add(tap);
+                Tap tap = tapParser.parseTap(parts);
+                batchedTaps.computeIfAbsent(tap.dateTimeUtc().toLocalDate(), k -> new ArrayList<>()).add(tap);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
