@@ -9,6 +9,7 @@ import java.util.Map;
 public class TapsToTripsRecordProcessor implements RecordProcessor<Tap, Trip> {
 
     private final Map<Long, Tap> pendingTaps = new HashMap<>();
+    private final TripChargeCalculator tripChargeCalculator = new TripChargeCalculator();
 
     @Override
     public List<Trip> process(List<Tap> taps) {
@@ -19,11 +20,14 @@ public class TapsToTripsRecordProcessor implements RecordProcessor<Tap, Trip> {
                 pendingTaps.put(tap.pan(), tap);
             } else if (tap.tapType().equals(TapType.OFF)) {
                 Tap tapOff = tap;
-                Tap tapOn = pendingTaps.remove(tap.pan());
+                Tap tapOn = pendingTaps.remove(tapOff.pan());
                 if (tapOn != null) {
-                    Double tripCharge = 0.0;
                     if (tapOn.stopId().equals(tapOff.stopId())) {
-                        Trip trip = new Trip(tapOn.dateTimeUtc(), tapOff.dateTimeUtc(), Duration.between(tapOn.dateTimeUtc(), tapOff.dateTimeUtc()).getSeconds(), tapOn.stopId(), tapOff.stopId(), tripCharge, tapOn.companyId(), tapOn.busId(), tapOn.pan(), Status.CANCELLED);
+                        Trip trip = new Trip(tapOn.dateTimeUtc(), tapOff.dateTimeUtc(), Duration.between(tapOn.dateTimeUtc(), tapOff.dateTimeUtc()).getSeconds(), tapOn.stopId(), tapOff.stopId(), 0.0, tapOn.companyId(), tapOn.busId(), tapOn.pan(), Status.CANCELLED);
+                        trips.add(trip);
+                    } else {
+                        Double tripCharge = tripChargeCalculator.calculateTripCharge(tapOn.stopId(), tapOff.stopId());
+                        Trip trip = new Trip(tapOn.dateTimeUtc(), tapOff.dateTimeUtc(), Duration.between(tapOn.dateTimeUtc(), tapOff.dateTimeUtc()).getSeconds(), tapOn.stopId(), tapOff.stopId(), tripCharge, tapOn.companyId(), tapOn.busId(), tapOn.pan(), Status.COMPLETED);
                         trips.add(trip);
                     }
                 }
