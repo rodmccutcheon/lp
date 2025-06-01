@@ -23,4 +23,13 @@ public class TripChargeCalculator {
     public Double calculateTripCharge(String fromStop, String toStop) {
         return FARE_TABLE.getOrDefault(Pair.of(fromStop, toStop), 0.0);
     }
+
+    public Double calculateMaximumFare(String fromStop) {
+        switch (fromStop) {
+            case "Stop1": return 7.30;
+            case "Stop2": return 5.50;
+            case "Stop3": return 7.30;
+        }
+        return 0.0;
+    }
 }

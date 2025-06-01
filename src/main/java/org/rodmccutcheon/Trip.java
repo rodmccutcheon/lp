@@ -4,7 +4,7 @@ import java.time.ZonedDateTime;
 
 public record Trip(ZonedDateTime started,
                    ZonedDateTime finished,
-                   long durationSecs,
+                   Long durationSecs,
                    String fromStopId,
                    String toStopId,
                    Double chargeAmount,

@@ -34,6 +34,12 @@ public class TapsToTripsRecordProcessor implements RecordProcessor<Tap, Trip> {
             }
         });
 
+        // Any remaining pending taps indicate incomplete trip/s
+        pendingTaps.forEach((pan, tap) -> {
+            Trip trip = new Trip(tap.dateTimeUtc(), null, null, tap.stopId(), null, tripChargeCalculator.calculateMaximumFare(tap.stopId()), tap.companyId(), tap.busId(), tap.pan(), Status.INCOMPLETE);
+            trips.add(trip);
+        });
+
         return trips;
     }
 }
