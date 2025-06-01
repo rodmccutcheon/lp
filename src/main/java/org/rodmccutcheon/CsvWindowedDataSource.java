@@ -1,6 +1,7 @@
 package org.rodmccutcheon;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +18,7 @@ public class CsvWindowedDataSource implements WindowedDataSource<Tap> {
     @Override
     public Stream<List<Tap>> stream() {
 
-        Map<ZonedDateTime, List<Tap>> batchedTaps = new LinkedHashMap<>();
+        Map<LocalDate, List<Tap>> batchedTaps = new LinkedHashMap<>();
 
         try (FileInputStream fis = new FileInputStream("src/main/resources/taps.csv");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
@@ -33,7 +34,7 @@ public class CsvWindowedDataSource implements WindowedDataSource<Tap> {
                 String busId = parts[5].trim();
                 long pan = Long.parseLong(parts[6].trim());
                 Tap tap = new Tap(id, dateTimeUtc, tapType, stopId, companyId, busId, pan);
-                batchedTaps.computeIfAbsent(dateTimeUtc, k -> new ArrayList<>()).add(tap);
+                batchedTaps.computeIfAbsent(dateTimeUtc.toLocalDate(), k -> new ArrayList<>()).add(tap);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
