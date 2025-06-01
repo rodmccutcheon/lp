@@ -1,8 +1,7 @@
 package org.rodmccutcheon;
 
-import java.util.stream.Stream;
+import java.util.List;
 
-public interface DataSink<T> extends AutoCloseable {
-    void write(T record);
-    void writeAll(Stream<T> records);
+public interface DataSink<T> {
+    void write(String filename, List<T> record);
 }

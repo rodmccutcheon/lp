@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "org.rodmccuctcheon"
@@ -15,6 +16,15 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
+application {
+    mainClass.set("org.rodmccutcheon.Main")
+}
+
 tasks.test {
     useJUnitPlatform()
+
+    testLogging {
+        events("passed", "skipped", "failed", "started")
+        showStandardStreams = true
+    }
 }
